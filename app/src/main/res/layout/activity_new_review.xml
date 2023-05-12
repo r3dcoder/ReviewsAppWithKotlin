@@ -8,7 +8,9 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Write your review"
+        android:text="Give the rating"
+        android:layout_margin="20dp"
+        android:layout_gravity="center"
         android:textAppearance="?android:textAppearanceMedium" />
 
     <RatingBar
@@ -16,7 +18,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:numStars="5"
-        android:rating="0"
+        android:layout_margin="20dp"
+        android:rating="1"
+        android:layout_gravity="center"
         android:stepSize="1" />
 
     <EditText
@@ -25,14 +29,18 @@
         android:layout_height="wrap_content"
         android:hint="Your review"
         android:inputType="textMultiLine"
-        android:lines="5"
-        android:maxLines="10"
-        android:minLines="1" />
+        android:lines="10"
+        android:layout_gravity="center"
+        android:layout_margin="20dp"
+        android:maxLines="15"
+        android:minLines="5" />
 
     <Button
         android:id="@+id/submit_review_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:layout_gravity="center"
         android:text="Submit" />
 
 </LinearLayout>

@@ -8,7 +8,12 @@
         android:id="@+id/profileItem"
         android:title="Profile" />
     <item
+        android:id="@+id/newReviewItem"
+        android:title="Create Review" />
+    <item
         android:id="@+id/logOutItem"
         android:title="Logout" />
+
+
 
 </menu>

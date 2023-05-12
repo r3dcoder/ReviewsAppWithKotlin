@@ -36,6 +36,7 @@ open class DrawerBaseActivity : AppCompatActivity(), NavigationView.OnNavigation
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
 
         when(item.itemId){
+            R.id.newReviewItem -> startActivity(Intent(this, NewReviewActivity::class.java))
             R.id.reviewsItem -> startActivity(Intent(this, ReviewListActivity::class.java))
             R.id.logOutItem -> {
                 val sharedPreferences = getSharedPreferences("MySession", Context.MODE_PRIVATE)
