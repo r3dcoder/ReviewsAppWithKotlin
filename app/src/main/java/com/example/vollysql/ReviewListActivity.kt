@@ -115,6 +115,7 @@ class ReviewListActivity : DrawerBaseActivity() {
                             )
                         )
                         val reviewViewModel = ReviewViewModel(
+                            review.getInt("id"),
                             user,
                             review.getString("body"),
                             review.getInt("rating"),
