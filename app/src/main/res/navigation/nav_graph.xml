@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/reviewListActivity">
+
+    <activity
+        android:id="@+id/reviewListActivity"
+        android:name="com.example.vollysql.ReviewListActivity"
+        android:label="activity_review_list"
+        tools:layout="@layout/activity_review_list" />
+    <activity
+        android:id="@+id/loginActivity"
+        android:name="com.example.vollysql.LoginActivity"
+        android:label="activity_login"
+        tools:layout="@layout/activity_login" />
+    <fragment
+        android:id="@+id/newReviewFragment2"
+        android:name="com.example.vollysql.NewReviewFragment"
+        android:label="fragment_new_review"
+        tools:layout="@layout/fragment_new_review" />
+</navigation>
