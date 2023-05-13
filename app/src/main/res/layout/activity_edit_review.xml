@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    tools:context=".EditReviewActivity">
+
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Give the rating"
+        android:text="Edit the rating"
         android:layout_margin="20dp"
         android:layout_gravity="center"
         android:textAppearance="?android:textAppearanceMedium" />
@@ -29,14 +31,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Your review"
-        android:editable="true"
+
         android:inputType="textMultiLine"
         android:lines="10"
         android:layout_gravity="center"
         android:layout_margin="20dp"
         android:maxLines="15"
         android:minLines="5"
-        tools:ignore="Deprecated" />
+         />
 
     <Button
         android:id="@+id/submit_review_button"
@@ -45,5 +47,6 @@
         android:layout_margin="20dp"
         android:layout_gravity="center"
         android:text="Submit" />
+
 
 </LinearLayout>

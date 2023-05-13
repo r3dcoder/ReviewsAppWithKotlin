@@ -2,6 +2,7 @@ package com.example.vollysql
 
 import android.content.ClipData.Item
 import android.content.Context
+import android.content.Intent
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.abs
@@ -13,6 +14,7 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
@@ -33,6 +35,11 @@ class CustomAdapter(private val mList: List<ReviewViewModel>) : RecyclerView.Ada
 
         val ItemsViewModel = mList[position]
 
+        holder.editButton.setOnClickListener{
+            var intent = Intent(holder.itemView.context, EditReviewActivity::class.java)
+            intent.putExtra("review_id", ItemsViewModel.id)
+            holder.itemView.context.startActivity(intent)
+        }
         // Load user image using Glide
         Glide.with(holder.itemView.context)
             .load( MainActivity.mainUrl+ItemsViewModel.user.profile_picture)

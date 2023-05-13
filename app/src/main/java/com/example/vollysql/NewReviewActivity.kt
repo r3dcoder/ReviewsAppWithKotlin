@@ -13,15 +13,22 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import org.json.JSONException
 import org.json.JSONObject
+import com.example.vollysql.databinding.ActivityNewReviewBinding
+import com.example.vollysql.databinding.ActivityReviewListBinding
 
-class NewReviewActivity : AppCompatActivity() {
+class NewReviewActivity : DrawerBaseActivity() {
+    private lateinit var activityBinding: ActivityNewReviewBinding;
+
     private lateinit var ratingBar: RatingBar
     private lateinit var reviewBodyEditText: EditText
     private lateinit var submitButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_new_review);
+//        setContentView(R.layout.activity_new_review);
+
+        activityBinding = ActivityNewReviewBinding.inflate(layoutInflater)
+        setContentView(activityBinding.root)
 
         ratingBar = findViewById(R.id.rating_bar)
         reviewBodyEditText = findViewById(R.id.review_body)
