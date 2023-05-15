@@ -82,6 +82,11 @@ class CustomAdapter(private val mList: List<ReviewViewModel>) :
 
         }
 
+        holder.messageButton.setOnClickListener {
+            var intent = Intent(holder.itemView.context, MessageActivity::class.java)
+            intent.putExtra("review_id", ItemsViewModel.id)
+            holder.itemView.context.startActivity(intent)
+         }
         holder.deleteButton.setOnClickListener {
             val builder = AlertDialog.Builder(holder.itemView.context)
             builder.setTitle("Confirm Delete")
@@ -129,6 +134,11 @@ class CustomAdapter(private val mList: List<ReviewViewModel>) :
         val isLoggedIn = prefs.getBoolean("isLoggedIn", false)
         val user_id = prefs.getInt("user_id", -1)
         val role = prefs.getString("role", null);
+
+        if(role == "admin"){
+            holder.messageButton.visibility = View.VISIBLE
+        }
+        else holder.messageButton.visibility = View.GONE
 
         // Show or hide the like button based on the value in SharedPreferences
         if (isLoggedIn && (user_id == ItemsViewModel.user.id || role == "admin")) {
@@ -281,6 +291,7 @@ class CustomAdapter(private val mList: List<ReviewViewModel>) :
         var deleteButton: ImageButton = itemView.findViewById(R.id.delete_button)
         var likeButton: ImageButton = itemView.findViewById(R.id.like_button)
         var dislikeButton: ImageButton = itemView.findViewById(R.id.dislike_button)
+        var messageButton: ImageButton = itemView.findViewById(R.id.message_button)
 
     }
 }

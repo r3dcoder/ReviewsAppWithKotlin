@@ -15,41 +15,46 @@
         <TextView
             android:id="@+id/totalLikeText"
             android:layout_width="wrap_content"
-            android:paddingTop="14dp"
+            android:paddingTop="7dp"
             android:layout_height="wrap_content" />
 
         <ImageButton
             android:id="@+id/like_button"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:src="@drawable/thumb_up" />
 
         <TextView
             android:id="@+id/totalDisLikeText"
             android:layout_width="wrap_content"
-            android:paddingTop="14dp"
+            android:paddingTop="7dp"
             android:layout_marginStart="8dp"
             android:layout_height="wrap_content" />
 
         <ImageButton
             android:id="@+id/dislike_button"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:src="@drawable/thumb_down"
              />
 
     </LinearLayout>
 
     <ImageButton
+        android:id="@+id/message_button"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/baseline_message" />
+    <ImageButton
         android:id="@+id/edit_button"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
         android:src="@drawable/baseline_mode_edit_24" />
 
     <ImageButton
         android:id="@+id/delete_button"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
         android:src="@drawable/delete_icon"
         android:layout_marginStart="16dp" />
 

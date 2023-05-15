@@ -45,27 +45,31 @@ class SignUpActivity : AppCompatActivity() {
             val firstName = firstNameEditText.text.toString()
             val lastName = lastNameEditText.text.toString()
 
-            // Check if email and password are correct
-            var user = signup(email, password, firstName, lastName) { user ->
-                if (user != null) {
-                    // Do something with the user object here
-                    val sharedPreferences = getSharedPreferences("MySession", Context.MODE_PRIVATE)
-                    val editor = sharedPreferences.edit()
-                    editor.putString("full_name", user.firstName+" "+user.lastName);
-                    editor.putString("profile_picture", user.profile_picture);
-                    editor.putString("user_id", user.id.toString());
-                    editor.putString("role", user.role);
-                    editor.putInt("user_id", user.id);
-                    editor.putBoolean("isLoggedIn", true)
-                    editor.apply()
-                    val intent = Intent(this, ReviewListActivity::class.java)
-                    startActivity(intent)
-                } else {
-                    // Show error message to user
-                    Toast.makeText(this, "Invalid email or password", Toast.LENGTH_SHORT).show()
+            if(email.isNotEmpty() && password.isNotEmpty() && firstName.isNotEmpty() && lastName.isNotEmpty()){
+                var user = signup(email, password, firstName, lastName) { user ->
+                    if (user != null && user?.email?.isNotEmpty() == true) {
+                        // Do something with the user object here
+                        val sharedPreferences = getSharedPreferences("MySession", Context.MODE_PRIVATE)
+                        val editor = sharedPreferences.edit()
+                        editor.putString("full_name", user.firstName+" "+user.lastName);
+                        editor.putString("profile_picture", user.profile_picture);
+                        editor.putString("user_id", user.id.toString());
+                        editor.putString("role", user.role);
+                        editor.putInt("user_id", user.id);
+                        editor.putBoolean("isLoggedIn", true)
+                        editor.apply()
+                        val intent = Intent(this, ReviewListActivity::class.java)
+                        startActivity(intent)
+                    } else {
+                        // Show error message to user
+//                        Toast.makeText(this, "Invalid email or password", Toast.LENGTH_SHORT).show()
+                    }
                 }
-            }
 
+            }
+            else{
+                Toast.makeText(this, "Fill up  all the required fields, please!!", Toast.LENGTH_LONG).show()
+            }
         }
 
 
@@ -83,27 +87,35 @@ class SignUpActivity : AppCompatActivity() {
                 try {
                     val obj = JSONObject(response)
                     val userObj = obj.getJSONObject("user")
-                    val user = UserViewModel(
-                        userObj.getInt("id"),
-                        userObj.getString("firstName"),
-                        userObj.getString("lastName"),
-                        userObj.getString("email"),
-                        userObj.getString("profile_picture"),
-                        userObj.getString("city"),
-                        userObj.getString("password"),
-                        userObj.getString("role"),
-                        userObj.getString("country"),
+                    val errorStatus = obj.getBoolean("error")
+                    if(!errorStatus){
+
+                        val user = UserViewModel(
+                            userObj.getInt("id"),
+                            userObj.getString("firstName"),
+                            userObj.getString("lastName"),
+                            userObj.getString("email"),
+                            userObj.getString("profile_picture"),
+                            userObj.getString("city"),
+                            userObj.getString("password"),
+                            userObj.getString("role"),
+                            userObj.getString("country"),
 
 
-                        )
-                    onUserReceived(user)
+                            )
+                        onUserReceived(user)
+                    }
+                    else {
+                        Toast.makeText(this, "Try a different email!!", Toast.LENGTH_LONG).show()
+                        onUserReceived(null)
+                    }
                 } catch (e: JSONException) {
                     e.printStackTrace()
                     onUserReceived(null)
                 }
             },
             Response.ErrorListener { error ->
-                Toast.makeText(this, error.message, Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Try with a different email!!", Toast.LENGTH_LONG).show()
                 onUserReceived(null)
             }
         ) {
