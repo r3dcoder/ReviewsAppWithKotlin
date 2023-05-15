@@ -45,7 +45,7 @@ open class DrawerBaseActivity : AppCompatActivity(), NavigationView.OnNavigation
                 editor.apply()
                 startActivity(Intent(this, LoginActivity::class.java))
             }
-            R.id.profileItem -> startActivity(Intent(this, SignUpActivity::class.java))
+            R.id.profileItem -> startActivity(Intent(this, UpdateProfileActivity::class.java))
         }
 
         return false
