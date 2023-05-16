@@ -27,6 +27,7 @@ class CustomAdapter(private val mList: List<ReviewViewModel>) :
     RecyclerView.Adapter<CustomAdapter.ViewHolder>() {
 
     // create new views
+    var globalmsg = "";
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         // inflates the card_view_design view
         // that is used to hold list item
@@ -128,17 +129,28 @@ class CustomAdapter(private val mList: List<ReviewViewModel>) :
             holder.totalLikeText.text = response!!.totalLike.toString();
             holder.totalDisLikeText.text = response!!.totalDislike.toString()
         }
+        var msg = ""
 
         // Access SharedPreferences using the context object
         val prefs = holder.itemView.context.getSharedPreferences("MySession", Context.MODE_PRIVATE)
         val isLoggedIn = prefs.getBoolean("isLoggedIn", false)
         val user_id = prefs.getInt("user_id", -1)
-        val role = prefs.getString("role", null);
+        val role = prefs.getString("role", "user");
 
+        if (role != null) {
+            getReviewMessage(reviewId, holder.itemView.context , holder, role, userId==ItemsViewModel.user.id ){
+                    response->
+                holder.messageViewBody.text = response
+                if (response != null) {
+                    msg = response
+                }
+            }
+        }
         if(role == "admin"){
             holder.messageButton.visibility = View.VISIBLE
         }
         else holder.messageButton.visibility = View.GONE
+
 
         // Show or hide the like button based on the value in SharedPreferences
         if (isLoggedIn && (user_id == ItemsViewModel.user.id || role == "admin")) {
@@ -253,6 +265,55 @@ class CustomAdapter(private val mList: List<ReviewViewModel>) :
         queue.add(stringRequest)
     }
 
+
+    private  fun getReviewMessage(reviewId: Int, context:Context, holder:ViewHolder, role:String, sameUser:Boolean, onResponseReceived: (String?) -> Unit) {
+        val rootUrl = MainActivity.url+MainActivity.reviewUrl
+        val queue = Volley.newRequestQueue(context)
+
+        Log.d("rootUrl:::::", "$rootUrl&get_message=1&review_id=$reviewId");
+        val stringRequest = object : StringRequest(
+            Method.POST,
+            "$rootUrl&get_message=1&review_id=$reviewId",
+            Response.Listener { response ->
+
+                try {
+                    val obj = JSONObject(response)
+                    var msg = obj.getString("review_message")
+                    val messageObj = JSONObject(msg)
+                    val body = messageObj.getString("body")
+                    globalmsg = body
+                    Log.d("globalmsg body:", globalmsg)
+                    if((role == "admin" || sameUser) && body.toString().isNotEmpty()){
+
+                        Log.d("body.toString().isNotEmpty()", body.toString())
+
+                        holder.messageViewLayout.visibility = View.VISIBLE
+                    }
+                    else
+                    {
+                        holder.messageViewLayout.visibility = View.GONE
+                        Log.d("body.toString().isNotEmpty()", body.toString())
+                    }
+                    onResponseReceived(body)
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                    holder.messageViewLayout.visibility = View.GONE
+                    onResponseReceived(null)
+                }
+            },
+            Response.ErrorListener { error ->
+                holder.messageViewLayout.visibility = View.GONE
+                onResponseReceived(null)
+            }
+        ) {
+            override fun getParams(): MutableMap<String, String> {
+                val params = HashMap<String, String>()
+
+                return params
+            }
+        }
+        queue.add(stringRequest)
+    }
     // return the number of the items in the list
     override fun getItemCount(): Int {
         return mList.size
@@ -292,6 +353,8 @@ class CustomAdapter(private val mList: List<ReviewViewModel>) :
         var likeButton: ImageButton = itemView.findViewById(R.id.like_button)
         var dislikeButton: ImageButton = itemView.findViewById(R.id.dislike_button)
         var messageButton: ImageButton = itemView.findViewById(R.id.message_button)
+        var messageViewBody: TextView = itemView.findViewById(R.id.messageView)
+        var messageViewLayout: LinearLayout = itemView.findViewById(R.id.messageLayout)
 
     }
 }

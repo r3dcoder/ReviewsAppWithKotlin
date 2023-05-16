@@ -18,6 +18,8 @@
         <include layout="@layout/review_info_layout" />
 
         <include layout="@layout/edit_delete_layout" />
+        <include layout="@layout/message_body_layout" />
+
 
     </LinearLayout>
 

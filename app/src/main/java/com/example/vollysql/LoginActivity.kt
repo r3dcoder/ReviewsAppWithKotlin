@@ -65,7 +65,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun login(email: String, password: String, onUserReceived: (UserViewModel?) -> Unit) {
-        val rootUrl = "http://192.168.1.151/reviews/api/users.php?op=1"
+        val rootUrl = MainActivity.url
         val queue = Volley.newRequestQueue(this)
         val stringRequest = object : StringRequest(
             Method.POST,
